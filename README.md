@@ -1,0 +1,1 @@
+This is the readme file for sizle. A Photoshop scripted application to resize images.
