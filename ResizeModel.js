@@ -1,4 +1,5 @@
 ﻿/// <reference path="Dialog.js" />
+/// <reference path="Preferences.js" />
 
 // This file is part of sizle.
 
@@ -344,6 +345,48 @@
 
 	        this.setLastDialog(new app.RLM2.Dialog(['resizeSourceFolder']).setReplacements(['' + successCount, '' + fsObjects.length]));
         }
+	};
+
+	app.RLM2.ResizeModel.prototype.init = function () {
+	    var prefs = app.RLM2.preferences.read();
+
+	    if (typeof prefs.sourceFolder !== 'undefined') {
+	        var f = new Folder(prefs.sourceFolder);
+	        if (f.exists) {
+	            this.setSourceFolder(f);
+	        }
+	    }
+
+	    if (typeof prefs.destinationFolder !== 'undefined') {
+	        var f = new Folder(prefs.destinationFolder);
+	        if (f.exists) {
+	            this.setDestinationFolder(f);
+	        }
+	    }
+
+	    if (typeof prefs.maxDimensionLength !== 'undefined') {
+	        this.setMaxDimensionLength(prefs.maxDimensionLength);
+	    }
+	};
+
+	app.RLM2.ResizeModel.prototype.exit = function (savePreferences) {
+	    if (!savePreferences) {
+	        return;
+	    }
+
+	    var v = this.getSourceFolder();
+	    if (v != null) {
+	        app.RLM2.preferences.sourceFolder = v.absoluteURI;
+	    }
+
+	    v = this.getDestinationFolder();
+	    if (v != null) {
+	        app.RLM2.preferences.destinationFolder = v.absoluteURI;
+	    }
+
+	    app.RLM2.preferences.maxDimensionLength = this.getMaxDimensionLength();
+
+	    app.RLM2.preferences.save();
 	};
 
 })();

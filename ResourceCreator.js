@@ -1,4 +1,4 @@
-/// <reference path="Strings.js" />
+﻿/// <reference path="Strings.js" />
 /// <reference path="Localize.js" />
 
 // This file is part of sizle.
@@ -70,6 +70,25 @@
 		return p;
 	}
 
+    function addSlashes(text) {
+        /// <summary>When adding strings to resource strings it is necessary to add slashes for certain characters. Most of the time this is not needed but is in some cases, for example file paths on a Windows system.</summary>
+        /// <param name="text" type="String | Object">if a string.</param>
+        /// <returns type="String">A string to be used as part of a resource string.</returns>
+        if (typeof text !== 'object') {
+            return text;
+        }
+
+        if (typeof text.text === 'undefined') {
+            return null;
+        }
+
+        if (typeof text.addSlashes !== 'undefined' && text.addSlashes) {
+            return ('' + text.text).replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
+        }
+
+        return '' + text.text;
+    }
+
 	if (typeof app.RLM2 === 'undefined') {
 		app.RLM2 = function () {};
 	}
@@ -83,12 +102,12 @@
 	/*
 	Generate a resource string to create a Button control.
 	@param {String} name - The name of the property that can be used to access the Button after it is created.
-	@param {String} text - Text to be displayed on the Button.
+	@param {String | Object} text - Text to be displayed on the Button.
 	@param {Object} properties - An object with properties and values that can be converted into Control properties (see: createPropertiesResourceString).
 	@returns {String} A resource specification describing a Button control.
 	*/
 	app.RLM2.ResourceCreator.prototype.createButtonResource = function (name, text, properties) {
-	    var resource = name + ':Button{text:\'' + text + '\'';
+	    var resource = name + ':Button{text:\'' + addSlashes (text) + '\'';
 	    resource += createPropertiesResourceString(properties);
 	    resource += '}';
 	    return resource;
@@ -100,7 +119,7 @@
 	    ///<param name="localizeObject" type="app.RLM2.Localize">Text to be displayed next to the RadioButton.</param>
 	    ///<param name="properties" type="Object">An object with properties and values that can be converted into Control properties (see: createPropertiesResourceString).</param>
 	    ///<returns type="String">A resource specification describing a RadioButton control.</returns>
-	    return name + ':RadioButton{text:\'' + localizeObject.toLocalizedString() + '\'' + createPropertiesResourceString(properties) + '}';
+	    return name + ':RadioButton{text:\'' + addSlashes (localizeObject.toLocalizedString()) + '\'' + createPropertiesResourceString(properties) + '}';
 	};
 
 	/*
@@ -111,7 +130,7 @@
 	@returns {String} A resource specification describing a StaticText control.
 	*/
 	app.RLM2.ResourceCreator.prototype.createStaticTextResource = function (name, text, properties) {
-	    var resource = name + ':StaticText{text:\'' + text + '\'';
+	    var resource = name + ':StaticText{text:\'' + addSlashes (text) + '\'';
 	    resource += createPropertiesResourceString(properties);
 	    resource += '}';
 	    return resource;
@@ -125,7 +144,7 @@
 	@returns {String} A resource specification describing an EditText control.
 	*/
 	app.RLM2.ResourceCreator.prototype.createEditTextResource = function (name, text, properties) {
-	    var resource = name + ':EditText{text:\'' + text + '\'';
+	    var resource = name + ':EditText{text:\'' + addSlashes (text) + '\'';
 	    resource += createPropertiesResourceString(properties);
 	    resource += '}';
 	    return resource;
@@ -166,7 +185,7 @@
 	        resChildren += ',' + arguments[i];
 	    }
 
-	    return name + ':Panel{text:\'' + localizeObject.toLocalizedString() + '\'' + resProperties + resChildren + '}';
+	    return name + ':Panel{text:\'' + addSlashes (localizeObject.toLocalizedString()) + '\'' + resProperties + resChildren + '}';
 	};
 
 	/*
@@ -182,7 +201,7 @@
 	    for (var i = 2; i < arguments.length; i++) {
 	        resChildren += ',' + arguments[i];
 	    }
-	    return 'dialog{properties:{resizeable:false},text:\'' + text + '\'' + resProperties + resChildren + '}';
+	    return 'dialog{properties:{resizeable:false},text:\'' + addSlashes (text) + '\'' + resProperties + resChildren + '}';
 	};
 
 })();

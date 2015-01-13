@@ -1,4 +1,6 @@
-﻿// This file is part of sizle.
+﻿/// <reference path="ResizeModel.js" />
+
+// This file is part of sizle.
 
 // sizle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,6 +21,7 @@
 #include Strings.js
 #include Localize.js
 #include Dialog.js
+#include Preferences.js
 #include ResizeModel.js
 #include ResourceCreator.js
 #include ResizeView.js
@@ -29,12 +32,15 @@
 </javascriptresource>
 
 function main() {
-	var model = new app.RLM2.ResizeModel();
+    var model = new app.RLM2.ResizeModel();
+    model.init();
 
 	var view = new app.RLM2.ResizeView();
 	view.setModel(model);
 
 	view.show();
+
+	model.exit(true);
 }
 
 main();

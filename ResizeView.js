@@ -60,57 +60,57 @@
 
 		var res = new app.RLM2.ResourceCreator ();
 		var resource = res.createDialogResource(model.getApplicationName(), {
-				'alignChildren' : '[\'fill\',\'fill\']'
+		    'alignChildren': '[\'fill\',\'fill\']'
 		},
 				/* Begin source panel */
-				res.createPanelResource('sourcePanel', new app.RLM2.Localize (['MainWindow', 'sourcePanel']), {
-					    'orientation' : 'column',
-					    'alignChildren' : '[\'left\',\'center\']'
-				    },
+				res.createPanelResource('sourcePanel', new app.RLM2.Localize(['MainWindow', 'sourcePanel']), {
+				    'orientation': 'column',
+				    'alignChildren': '[\'left\',\'center\']'
+				},
 					    res.createRadioButtonResource('doc', new app.RLM2.Localize(['sourcePanel', 'doc']), {
-						    'value' : model.getSourceType() === app.RLM2.ResizeModel.SourceActiveDocument
+					        'value': model.getSourceType() === app.RLM2.ResizeModel.SourceActiveDocument
 					    }),
 					    res.createRadioButtonResource('folder', new app.RLM2.Localize(['sourcePanel', 'folder']), {
-						    'value' : model.getSourceType() === app.RLM2.ResizeModel.SourceFolder
+					        'value': model.getSourceType() === app.RLM2.ResizeModel.SourceFolder
 					    }),
 					    res.createGroupResource('folderGroup', {
-						    'alignment' : 'fill',
-						    'orientation' : 'row',
-						    'alignChildren' : '[\'center\',\'center\']'
+					        'alignment': 'fill',
+					        'orientation': 'row',
+					        'alignChildren': '[\'center\',\'center\']'
 					    },
 						    res.createButtonResource('selectFolder', 'Select', {
-							    'enabled' : model.getSourceType() === app.RLM2.ResizeModel.SourceFolder
+						        'enabled': model.getSourceType() === app.RLM2.ResizeModel.SourceFolder
 						    }),
-						    res.createStaticTextResource('sourceFolder', model.getSourceFolderFileSystemName(), {
-							    'enabled' : model.getSourceType() === app.RLM2.ResizeModel.SourceFolder,
-							    'preferredSize' : '[400,-1]',
-							    'truncate' : 'middle'
+						    res.createStaticTextResource('sourceFolder', { 'addSlashes': true, 'text': model.getSourceFolderFileSystemName() }, {
+						        'enabled': model.getSourceType() === app.RLM2.ResizeModel.SourceFolder,
+						        'preferredSize': '[400,-1]',
+						        'truncate': 'middle'
 						    })
                         )
                 ),
 				/* Begin destination panel */
                 res.createPanelResource('destinationPanel', new app.RLM2.Localize(['MainWindow', 'destinationPanel']), {
-                        'orientation': 'column',
-                        'alignChildren': '[\'left\',\'center\']'
-                    },
+                    'orientation': 'column',
+                    'alignChildren': '[\'left\',\'center\']'
+                },
                         res.createRadioButtonResource('overwriteExistingFile', new app.RLM2.Localize(['destinationPanel', 'overwriteExistingFile']), {
-                            'value' : model.getDestinationType() === app.RLM2.ResizeModel.DestinationExistingFile
+                            'value': model.getDestinationType() === app.RLM2.ResizeModel.DestinationExistingFile
                         }),
                         res.createRadioButtonResource('saveNewFile', new app.RLM2.Localize(['destinationPanel', 'saveNewFile']), {
-                            'value' : model.getDestinationType() === app.RLM2.ResizeModel.DestinationNewFile
+                            'value': model.getDestinationType() === app.RLM2.ResizeModel.DestinationNewFile
                         }),
 					    res.createGroupResource('folderGroup', {
-					        'alignment' : 'fill',
-					        'orientation' : 'row',
-					        'alignChildren' : '[\'center\',\'center\']'
+					        'alignment': 'fill',
+					        'orientation': 'row',
+					        'alignChildren': '[\'center\',\'center\']'
 					    },
 						    res.createButtonResource('selectFolder', 'Select', {
 						        'enabled': model.getDestinationType() === app.RLM2.ResizeModel.DestinationNewFile
 						    }),
-						    res.createStaticTextResource('destinationFolder', model.getSourceFolderFileSystemName(), {
+						    res.createStaticTextResource('destinationFolder', { 'addSlashes': true, 'text': model.getDestinationFolderFileSystemName() }, {
 						        'enabled': model.getDestinationType() === app.RLM2.ResizeModel.DestinationNewFile,
-						        'preferredSize' : '[400,-1]',
-						        'truncate' : 'middle'
+						        'preferredSize': '[400,-1]',
+						        'truncate': 'middle'
 						    })
                         )
                 ),
@@ -127,37 +127,37 @@
 						'value' : model.getCropType() === app.RLM2.ResizeModel.CropFill
 					})),*/
 				/* Begin resize panel */
-				res.createPanelResource('resizePanel', new app.RLM2.Localize (['MainWindow', 'resizePanel']), {
-					'alignChildren' : '[\'fill\',\'center\']'
+				res.createPanelResource('resizePanel', new app.RLM2.Localize(['MainWindow', 'resizePanel']), {
+				    'alignChildren': '[\'fill\',\'center\']'
 				},
-					res.createGroupResource ('proportionalGroup', {
-							'orientation' : 'row'
+					res.createGroupResource('proportionalGroup', {
+					    'orientation': 'row'
+					},
+						res.createGroupResource('maxDimensionLengthLabelGroup', {
+						    'alignChildren': '[\'right\',\'center\']'
 						},
-						res.createGroupResource ('maxDimensionLengthLabelGroup', {
-								'alignChildren' : '[\'right\',\'center\']'
-							},
-							res.createStaticTextResource ('maxDimensionLengthLabel', 'length of maximum dimension')
+							res.createStaticTextResource('maxDimensionLengthLabel', 'length of maximum dimension')
 						),
-						res.createEditTextResource ('maxDimensionLength', model.getMaxDimensionLength(), {
-							'characters' : 5,
+						res.createEditTextResource('maxDimensionLength', model.getMaxDimensionLength(), {
+						    'characters': 5,
 						})
 					)
 				),
 				/* Begin button group */
 				res.createGroupResource('buttonGroup', {
-						'orientation' : 'row',
-						'alignChildren' : '[\'fill\',\'center\']'
+				    'orientation': 'row',
+				    'alignChildren': '[\'fill\',\'center\']'
+				},
+					res.createGroupResource('buttonGroupLeft', {
+					    'orientation': 'row',
+					    'alignChildren': '[\'left\',\'center\']'
 					},
-					res.createGroupResource ('buttonGroupLeft', {
-							'orientation' : 'row',
-							'alignChildren' : '[\'left\',\'center\']'
-						},
 						res.createButtonResource('about', 'About')
 					),
-					res.createGroupResource ('buttonGroupRight', {
-							'orientation' : 'row',
-							'alignChildren' : '[\'right\',\'center\']'
-						},
+					res.createGroupResource('buttonGroupRight', {
+					    'orientation': 'row',
+					    'alignChildren': '[\'right\',\'center\']'
+					},
 						res.createButtonResource('start', 'Start'),
 						res.createButtonResource('cancel', 'Cancel')
 					)
@@ -257,7 +257,7 @@
 
 	app.RLM2.ResizeView.prototype.show = function () {
 	    var window = getMainWindow(this._model);
-	    window.show();
+	    return window.show();
 	};
 
 })();
