@@ -9,7 +9,7 @@ Copy all of the files and folders into Photoshop's script folder. Or use the Ext
 
 #Roadmap
 The following features remain to be done.
-~~- store user preferences~~
+- ~~store user preferences~~
 - output to new file: overwrite existing file
 - output to new file: choose file type
 - saving files progress
