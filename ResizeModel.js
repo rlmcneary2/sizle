@@ -144,10 +144,10 @@
     /* ResizeModel */
 	app.RLM2.ResizeModel = function () {
 		this._applicationName = 'sizle';
-		this._applicationVersion = '0.0.1';
+		this._applicationVersion = '0.0.2';
 		this._propertyChangedCallbacks = [];
 		this._lastDialog = null;
-		this._source = app.RLM2.ResizeModel.SourceActiveDocument;
+		this._sourceType = app.RLM2.ResizeModel.SourceTypeActiveDocument;
 		this._sourceFolder = null;
 		this._destination = app.RLM2.ResizeModel.DestinationNewFile;
 		this._destinationFolder = null;
@@ -156,8 +156,8 @@
 		this._maxDimensionLength = 1920;
 	};
 
-	app.RLM2.ResizeModel.SourceActiveDocument = 0;
-	app.RLM2.ResizeModel.SourceFolder = 1;
+	app.RLM2.ResizeModel.SourceTypeActiveDocument = 0;
+	app.RLM2.ResizeModel.SourceTypeFolder = 1;
 	app.RLM2.ResizeModel.DestinationNewFile = 0;
 	app.RLM2.ResizeModel.DestinationExistingFile = 1;
 	app.RLM2.ResizeModel.CropFit = 0;
@@ -185,11 +185,19 @@
 	};
 
 	app.RLM2.ResizeModel.prototype.getSourceType = function () {
-	    return this._source;
+	    /// <summary>Get the type of source that will be used to get one or more image files.</summary>
+	    /// <returns type="Number" integer="true">A SourceType enum.</param>
+	    return this._sourceType;
 	};
 
 	app.RLM2.ResizeModel.prototype.setSourceType = function (type) {
-	    this._source = type;
+	    /// <summary>Set the type of source that will be used to get one or more image files.</summary>
+	    /// <param name="type" type="Number" integer="true">A SourceType enum.</param>
+	    if (type !== app.RLM2.ResizeModel.SourceTypeActiveDocument && type !== app.RLM2.ResizeModel.SourceTypeFolder) {
+	        throw 'type \'' + type + '\' is not a valid source type.';
+	    }
+
+	    this._sourceType = type;
 	    raiseModelPropertyChanged(this, 'SourceType', this._propertyChangedCallbacks);
 	};
 
@@ -273,7 +281,7 @@
 	};
 
 	app.RLM2.ResizeModel.prototype.resize = function () {
-	    if (this.getSourceType() === app.RLM2.ResizeModel.SourceActiveDocument) {
+	    if (this.getSourceType() === app.RLM2.ResizeModel.SourceTypeActiveDocument) {
 	        if (!hasActiveDocument()) {
 	            this.setLastDialog(new app.RLM2.Dialog(['selectActiveFolder']));
 	            return;
@@ -350,11 +358,19 @@
 	app.RLM2.ResizeModel.prototype.init = function () {
 	    var prefs = app.RLM2.preferences.read();
 
+	    if (typeof prefs.sourceType !== 'undefined') {
+	        this.setSourceType(parseInt(prefs.sourceType));
+	    }
+
 	    if (typeof prefs.sourceFolder !== 'undefined') {
 	        var f = new Folder(prefs.sourceFolder);
 	        if (f.exists) {
 	            this.setSourceFolder(f);
 	        }
+	    }
+
+	    if (typeof prefs.destinationType !== 'undefined') {
+	        this.setDestinationType(parseInt(prefs.destinationType));
 	    }
 
 	    if (typeof prefs.destinationFolder !== 'undefined') {
@@ -374,9 +390,19 @@
 	        return;
 	    }
 
-	    var v = this.getSourceFolder();
+	    var v = this.getSourceType();
+	    if (v != null) {
+	        app.RLM2.preferences.sourceType = v;
+	    }
+
+	    v = this.getSourceFolder();
 	    if (v != null) {
 	        app.RLM2.preferences.sourceFolder = v.absoluteURI;
+	    }
+
+	    v = this.getDestinationType();
+	    if (v !== null) {
+	        app.RLM2.preferences.destinationType = v;
 	    }
 
 	    v = this.getDestinationFolder();

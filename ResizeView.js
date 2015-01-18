@@ -68,10 +68,10 @@
 				    'alignChildren': '[\'left\',\'center\']'
 				},
 					    res.createRadioButtonResource('doc', new app.RLM2.Localize(['sourcePanel', 'doc']), {
-					        'value': model.getSourceType() === app.RLM2.ResizeModel.SourceActiveDocument
+					        'value': model.getSourceType() === app.RLM2.ResizeModel.SourceTypeActiveDocument
 					    }),
 					    res.createRadioButtonResource('folder', new app.RLM2.Localize(['sourcePanel', 'folder']), {
-					        'value': model.getSourceType() === app.RLM2.ResizeModel.SourceFolder
+					        'value': model.getSourceType() === app.RLM2.ResizeModel.SourceTypeFolder
 					    }),
 					    res.createGroupResource('folderGroup', {
 					        'alignment': 'fill',
@@ -79,10 +79,10 @@
 					        'alignChildren': '[\'center\',\'center\']'
 					    },
 						    res.createButtonResource('selectFolder', 'Select', {
-						        'enabled': model.getSourceType() === app.RLM2.ResizeModel.SourceFolder
+						        'enabled': model.getSourceType() === app.RLM2.ResizeModel.SourceTypeFolder
 						    }),
 						    res.createStaticTextResource('sourceFolder', { 'addSlashes': true, 'text': model.getSourceFolderFileSystemName() }, {
-						        'enabled': model.getSourceType() === app.RLM2.ResizeModel.SourceFolder,
+						        'enabled': model.getSourceType() === app.RLM2.ResizeModel.SourceTypeFolder,
 						        'preferredSize': '[400,-1]',
 						        'truncate': 'middle'
 						    })
@@ -166,10 +166,10 @@
 
 		_mainWindow = new Window(resource);
 		_mainWindow.sourcePanel.doc.addEventListener('click', function (evt) {
-			model.setSourceType(app.RLM2.ResizeModel.SourceActiveDocument);
+			model.setSourceType(app.RLM2.ResizeModel.SourceTypeActiveDocument);
 		});
 		_mainWindow.sourcePanel.folder.addEventListener('click', function (evt) {
-			model.setSourceType(app.RLM2.ResizeModel.SourceFolder);
+			model.setSourceType(app.RLM2.ResizeModel.SourceTypeFolder);
 		});
 		_mainWindow.sourcePanel.folderGroup.selectFolder.addEventListener('click', function (evt) {
 		    var folder = model.getSourceFolder();
@@ -230,8 +230,8 @@
 			var window = getMainWindow(model);
 			switch (propertyName) {
 			    case 'SourceType':
-			        window.sourcePanel.folderGroup.selectFolder.enabled = model.getSourceType() === app.RLM2.ResizeModel.SourceFolder;
-			        window.sourcePanel.folderGroup.sourceFolder.enabled = model.getSourceType() === app.RLM2.ResizeModel.SourceFolder;
+			        window.sourcePanel.folderGroup.selectFolder.enabled = model.getSourceType() === app.RLM2.ResizeModel.SourceTypeFolder;
+			        window.sourcePanel.folderGroup.sourceFolder.enabled = model.getSourceType() === app.RLM2.ResizeModel.SourceTypeFolder;
 				    break;
 			    case 'SourceFolder':
 			        window.sourcePanel.folderGroup.sourceFolder.text = model.getSourceFolderFileSystemName();

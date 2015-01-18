@@ -19,25 +19,42 @@
         app.RLM2 = function () { };
     }
 
-    var _folderName = Folder.userData + '\\sizle';
     var _fileName = 'preferences.txt';
+    var _folderName = '';
     Preferences = function () {
         /// <summary>This object can be used to read and write simple name / value pairs to a preferences file. To use it simply get the Prefernces object at app.RLM2.preferences and set some properties with a primitive value (Number, Boolean, String). Arrays and Objects are not supported. Invoke the save() function and the pairs will be written to a file. Use the read() function to get the value from the file and return a new Preferences object with the properties created from the file.</summary>
     };
+
+    Preferences.prototype.setPreferencesFolder = function (folderName) {
+        /// <summary>Set the name of the folder where the Preferences file will be saved.</summary>
+        /// <param name="folderName" type="String">The folder name.</param>
+        folder = folderName;
+        var c = '';
+        while (0 < folder.length) {
+            c = folder.substr(0, 1);
+            if (c !== '\\') {
+                break;
+            }
+
+            folder = folder.substr(1);
+        }
+
+        _folderName = folder;
+    }
 
     Preferences.prototype.read = function () {
         /// <summary>Read the name / values pairs from the preferences file and create them on a new Preferences object.</summary>
         /// <returns type="app.RLM2.Preferences">A Preferences object.</returns>
         var prefs = new Preferences();
 
-        var folder = new Folder(_folderName);
+        var folder = new Folder(Folder.userData + '/' + _folderName);
         if (!folder.exists) {
             if (!folder.create()) {
                 return false;
             }
         }
 
-        var file = new File(_folderName + '\\' + _fileName);
+        var file = new File(Folder.userData + '/' + _folderName + '/' + _fileName);
         if (!file.open('r')) {
             return false;
         }
@@ -73,18 +90,20 @@
         var prefs = '';
         for (var property in this) {
             if (this.hasOwnProperty(property)) {
-                prefs += (property + '=' + this[property] + '\r\n');
+                if (typeof this[property] !== 'function') {
+                    prefs += (property + '=' + this[property] + '\r\n');
+                }
             }
         }
 
-        var folder = new Folder(_folderName);
+        var folder = new Folder(Folder.userData + '/' + _folderName);
         if (!folder.exists) {
             if (!folder.create()) {
                 return false;
             }
         }
 
-        var file = new File(_folderName + '\\' + _fileName);
+        var file = new File(Folder.userData + '/' + _folderName + '/' + _fileName);
         if (!file.open('w')) {
             return false;
         }
@@ -95,6 +114,5 @@
     };
 
     app.RLM2.preferences = new Preferences();
-
 }
 )();

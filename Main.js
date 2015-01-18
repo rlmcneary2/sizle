@@ -32,6 +32,8 @@
 </javascriptresource>
 
 function main() {
+    app.RLM2.preferences.setPreferencesFolder ('sizle');
+
     var model = new app.RLM2.ResizeModel();
     model.init();
 
