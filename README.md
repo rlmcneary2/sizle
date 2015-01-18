@@ -1,9 +1,6 @@
 #sizle
 sizle is a Photoshop scripted application to resize images. It includes a graphical user interface for making selections.
 
-##History
-January 11, 2015 (0.0.1) - Initial publish to Github repository.
-
 #Use
 Copy all of the files and folders into Photoshop's script folder. Or use the ExtendScript application to load main.js and run the script.
 
@@ -20,6 +17,9 @@ The following features remain to be done.
 - build (combine all JS files into a single JSX file)
 
 and many more.
+
+#Development
+Javascript files use VSDOC format. Download and install VS 2013 Community Edition. Once that's done get the Web Development add-on, after it's been installed Intellisense for Javascript will appear. The files in the 'scripts' folder are there to help Intellisense with ExtendScript objects (it is not complete). TO use it follow these directions: http://madskristensen.net/post/improved-javascript-intellisense-in-visual-studio
 
 #Build
 There's no build necessary. But in order to create a single file there will eventually be a 'build' process to place all o fthe files into a single file.
