@@ -22,7 +22,7 @@ and many more.
 Javascript files use VSDOC format. Download and install VS 2013 Community Edition. Once that's done get the Web Development add-on, after it's been installed Intellisense for Javascript will appear. The files in the 'scripts' folder are there to help Intellisense with ExtendScript objects (it is not complete). To make use of those files follow these directions: http://madskristensen.net/post/improved-javascript-intellisense-in-visual-studio
 
 #Build
-There's no build necessary. But in order to create a single file there will eventually be a 'build' process to place all o fthe files into a single file.
+There's no build necessary. But in order to create a single file there will eventually be a 'build' process to place all of the files into a single file.
 
 #License
 Released under GPL3.
