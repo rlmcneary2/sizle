@@ -31,6 +31,7 @@
 	<category>RLM2</category>
 </javascriptresource>
 
+// This is the launching point for the script app.
 function main() {
     app.RLM2.preferences.setPreferencesFolder ('sizle');
 
